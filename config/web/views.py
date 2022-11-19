@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from web.formularios.formularioPlatos import FormularioRegistroPlatos
 from web.formularios.formularioEmpleados import FormularioRegistroEmpleados
+from web.models import Platos, Empleados
 # Create your views here.
 
 #CADA VISTA ES UNA FUNCION DE PY
@@ -8,7 +9,7 @@ from web.formularios.formularioEmpleados import FormularioRegistroEmpleados
 def Home(request):
     return render(request,'index.html')
 
-def Platos(request):
+def PlatosVista(request):
 
     #Cargar el formulario de registros de platos
     formulario = FormularioRegistroPlatos()
@@ -26,10 +27,18 @@ def Platos(request):
         if datosFormulario.is_valid():
             datosLimpios = datosFormulario.cleaned_data
             #ENVIANDO DATOS A MI BASE DE DATOS
+            platoNuevo = Platos(
+                nombre = datosLimpios["nombrePlato"],
+                descripcion = datosLimpios["descripcionPlato"],
+                imagen = datosLimpios["fotoPlato"],
+                precio = datosLimpios["precioPlato"],
+                tipo = datosLimpios["tipoPlato"]
+            )
+            platoNuevo.save()
 
     return render(request,'platos.html',diccionarioEnvioDatos)
 
-def Empleados(request):
+def EmpleadosVista(request):
 
     formularioEmpleado = FormularioRegistroEmpleados()
 
@@ -40,6 +49,14 @@ def Empleados(request):
     if request.method == 'POST':
         datosFormularioEmpleado = FormularioRegistroEmpleados(request.POST)
         if datosFormularioEmpleado.is_valid():
-            datosLimpios = datosFormularioEmpleado.cleaned_data
+            datosLimpiosEmpleado = datosFormularioEmpleado.cleaned_data
+            empleadoNuevo = Empleados(
+                nombre = datosLimpiosEmpleado["nombre"],
+                apellido = datosLimpiosEmpleado["apellido"],
+                cargo = datosLimpiosEmpleado["cargo"],
+                direccion = datosLimpiosEmpleado["direccion"],
+                telefono = datosLimpiosEmpleado["telefono"],
+            )
+            empleadoNuevo.save()
 
     return render(request,'empleados.html',diccionarioEnvioDatosEmpleado)

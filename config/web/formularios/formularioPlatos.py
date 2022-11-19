@@ -1,5 +1,6 @@
 from django import forms
 
+
 class FormularioRegistroPlatos(forms.Form):
 
     PLATOS = (

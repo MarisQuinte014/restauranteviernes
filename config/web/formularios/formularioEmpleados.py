@@ -9,8 +9,8 @@ class FormularioRegistroEmpleados(forms.Form):
         label="Nombre"
     )
     apellido=forms.CharField(
-        widget=forms.Textarea(attrs={"class":"form-control mb-3"}),
-        max_length=50,
+        widget=forms.TextInput(attrs={"class":"form-control mb-3"}),
+        max_length=25,
         required=True,
         label="Apellido"
     )
@@ -21,7 +21,8 @@ class FormularioRegistroEmpleados(forms.Form):
         label="Cargo"
     )
     direccion=forms.CharField(
-        widget=forms.NumberInput(attrs={"class":"form-control mb-3"}),
+        widget=forms.TextInput(attrs={"class":"form-control mb-3"}),
+        max_length=200,
         required=True,
         label="Dirección"
     )
